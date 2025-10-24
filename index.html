@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,23 +86,20 @@
   
   <div class="wrapper">
 
-    
-    
     <div class="calculator">
       <h3 style= "color: #c0a971; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 2.1em;"> Designer's Calculator </h3>
       <h2>Required Disclaimer Height</h2>
-      <label>Desired Percentage (%):</label>
-      <input type="number" id="desiredPercentage" placeholder="Enter percentage (e.g. 2)" oninput="calculateHeight()">
-      
+      <label>Desired Percentage (1.8% - 2%):</label>
+      <br/><br/>
       <label>Artboard Size:</label>
-      <input type="number" id="artboardHeight2" placeholder="Enter artboard size (e.g. 1200)" oninput="calculateHeight()">
+      <input type="number" id="artboardHeight2" placeholder="Enter artboard size (e.g. 1200)" oninput="calculateHeightRange()">
       <div class="small-note">Note: Largest measurement of the artboard.</div>
       
       <div class="result" id="result2"></div>
       <div class="indicator" id="indicator2"></div>
 
       <div class="note">
-        Note: Use this to find what the disclaimer height should be for your chosen percentage.
+        Note: Use this to find out what the disclaimer height should be.
       </div>
     </div>
 
@@ -122,7 +118,7 @@
       <div class="indicator" id="indicator"></div>
 
       <div class="note">
-        Note: PA disclaimer size should be between <strong>1.8%</strong> and <strong>2.1%</strong> of the artboard size.
+        Note: PA disclaimer size should be between <strong>1.8%</strong> and <strong>2%</strong> of the artboard size.
       </div>
     </div>
 
@@ -131,14 +127,14 @@
   </div>
 
   <script>
-    // First Calculator: Percentage of disclaimer height
+    // Checker Calculator: Percentage of disclaimer height
     function calculatePercentage() {
       const disclaimer = parseFloat(document.getElementById('disclaimerHeight').value);
       const artboard = parseFloat(document.getElementById('artboardHeight').value);
       const resultDiv = document.getElementById('result');
       const indicatorDiv = document.getElementById('indicator');
 
-      if (!disclaimer || !artboard || artboard === 0) {
+      if (isNaN(disclaimer) || isNaN(artboard) || artboard === 0) {
         resultDiv.textContent = "";
         indicatorDiv.textContent = "";
         return;
@@ -149,7 +145,7 @@
 
       resultDiv.textContent = `Disclaimer is ${rounded}% of the artboard height.`;
 
-      if (percentage >= 1.8 && percentage <= 2.1) {
+      if (percentage >= 1.8 && percentage <= 2) {
         resultDiv.style.color = "green";
         indicatorDiv.textContent = "✅ Within range";
         indicatorDiv.style.color = "green";
@@ -164,37 +160,26 @@
       }
     }
 
-    // Second Calculator: Required height from desired percentage
-    function calculateHeight() {
-      const percentage = parseFloat(document.getElementById('desiredPercentage').value);
+    // Designer Calculator: Show 1.8–2% range
+    function calculateHeightRange() {
       const artboard = parseFloat(document.getElementById('artboardHeight2').value);
       const resultDiv = document.getElementById('result2');
       const indicatorDiv = document.getElementById('indicator2');
 
-      if (!percentage || !artboard || artboard === 0) {
+      if (isNaN(artboard) || artboard === 0) {
         resultDiv.textContent = "";
         indicatorDiv.textContent = "";
         return;
       }
 
-      const height = (percentage / 100) * artboard;
-      const rounded = height.toFixed(2);
+      const minHeight = (1.8 / 100) * artboard;
+      const maxHeight = (2 / 100) * artboard;
 
-      resultDiv.textContent = `Required disclaimer height: ${rounded}px`;
+      resultDiv.textContent = `Required disclaimer height: ${minHeight.toFixed(2)}px – ${maxHeight.toFixed(2)}px`;
 
-      if (percentage >= 1.8 && percentage <= 2.1) {
-        resultDiv.style.color = "green";
-        indicatorDiv.textContent = "✅ Within recommended range";
-        indicatorDiv.style.color = "green";
-      } else if (percentage < 1.8) {
-        resultDiv.style.color = "red";
-        indicatorDiv.textContent = "⚠️ Below recommended size";
-        indicatorDiv.style.color = "red";
-      } else {
-        resultDiv.style.color = "red";
-        indicatorDiv.textContent = "⚠️ Above recommended size";
-        indicatorDiv.style.color = "red";
-      }
+      resultDiv.style.color = "green";
+      indicatorDiv.textContent = "✅ Within recommended range";
+      indicatorDiv.style.color = "green";
     }
   </script>
 </body>
