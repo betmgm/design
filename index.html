@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Disclaimer Calculators</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .wrapper {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .calculator {
+      background: white;
+      padding: 24px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    .small-note {
+      font-size: 0.85em;
+      color: #777;
+      margin-bottom: 16px;
+    }
+    .result {
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 1.2em;
+      transition: color 0.2s ease;
+    }
+    .indicator {
+      margin-top: 6px;
+      font-size: 0.95em;
+      font-weight: 500;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  
+@media (max-width: 600px) {
+  body {
+    height: auto;
+    padding: 20px;
+    align-items: flex-start;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .calculator {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+</style>
+<body>
+
+  
+  <div class="wrapper">
+
+    
+    
+    <div class="calculator">
+      <h3 style= "color: #c0a971; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 2.1em;"> Designer's Calculator </h3>
+      <h2>Required Disclaimer Height</h2>
+      <label>Desired Percentage (%):</label>
+      <input type="number" id="desiredPercentage" placeholder="Enter percentage (e.g. 2)" oninput="calculateHeight()">
+      
+      <label>Artboard Size:</label>
+      <input type="number" id="artboardHeight2" placeholder="Enter artboard size (e.g. 1200)" oninput="calculateHeight()">
+      <div class="small-note">Note: Largest measurement of the artboard.</div>
+      
+      <div class="result" id="result2"></div>
+      <div class="indicator" id="indicator2"></div>
+
+      <div class="note">
+        Note: Use this to find what the disclaimer height should be for your chosen percentage.
+      </div>
+    </div>
+
+    <div class="calculator">
+      <h3 style= "color: #c0a971; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 2.1em;"> Checker's Calculator</h3>
+        
+      <h2>PA Disclaimer Calculator</h2>
+      <label>Height of Disclaimer:</label>
+      <input type="number" id="disclaimerHeight" placeholder="Enter height (e.g. 25)" oninput="calculatePercentage()">
+      
+      <label>Artboard Size:</label>
+      <input type="number" id="artboardHeight" placeholder="Enter artboard size (e.g. 1200)" oninput="calculatePercentage()">
+      <div class="small-note">Note: Largest measurement of the artboard.</div>
+      
+      <div class="result" id="result"></div>
+      <div class="indicator" id="indicator"></div>
+
+      <div class="note">
+        Note: PA disclaimer size should be between <strong>1.8%</strong> and <strong>2.1%</strong> of the artboard size.
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <script>
+    // First Calculator: Percentage of disclaimer height
+    function calculatePercentage() {
+      const disclaimer = parseFloat(document.getElementById('disclaimerHeight').value);
+      const artboard = parseFloat(document.getElementById('artboardHeight').value);
+      const resultDiv = document.getElementById('result');
+      const indicatorDiv = document.getElementById('indicator');
+
+      if (!disclaimer || !artboard || artboard === 0) {
+        resultDiv.textContent = "";
+        indicatorDiv.textContent = "";
+        return;
+      }
+
+      const percentage = (disclaimer / artboard) * 100;
+      const rounded = percentage.toFixed(2);
+
+      resultDiv.textContent = `Disclaimer is ${rounded}% of the artboard height.`;
+
+      if (percentage >= 1.8 && percentage <= 2.1) {
+        resultDiv.style.color = "green";
+        indicatorDiv.textContent = "✅ Within range";
+        indicatorDiv.style.color = "green";
+      } else if (percentage < 1.8) {
+        resultDiv.style.color = "red";
+        indicatorDiv.textContent = "⚠️ Too small";
+        indicatorDiv.style.color = "red";
+      } else {
+        resultDiv.style.color = "red";
+        indicatorDiv.textContent = "⚠️ Too large";
+        indicatorDiv.style.color = "red";
+      }
+    }
+
+    // Second Calculator: Required height from desired percentage
+    function calculateHeight() {
+      const percentage = parseFloat(document.getElementById('desiredPercentage').value);
+      const artboard = parseFloat(document.getElementById('artboardHeight2').value);
+      const resultDiv = document.getElementById('result2');
+      const indicatorDiv = document.getElementById('indicator2');
+
+      if (!percentage || !artboard || artboard === 0) {
+        resultDiv.textContent = "";
+        indicatorDiv.textContent = "";
+        return;
+      }
+
+      const height = (percentage / 100) * artboard;
+      const rounded = height.toFixed(2);
+
+      resultDiv.textContent = `Required disclaimer height: ${rounded}px`;
+
+      if (percentage >= 1.8 && percentage <= 2.1) {
+        resultDiv.style.color = "green";
+        indicatorDiv.textContent = "✅ Within recommended range";
+        indicatorDiv.style.color = "green";
+      } else if (percentage < 1.8) {
+        resultDiv.style.color = "red";
+        indicatorDiv.textContent = "⚠️ Below recommended size";
+        indicatorDiv.style.color = "red";
+      } else {
+        resultDiv.style.color = "red";
+        indicatorDiv.textContent = "⚠️ Above recommended size";
+        indicatorDiv.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
