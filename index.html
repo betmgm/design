@@ -37,9 +37,10 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 10rem 10px;
         }
-
+        .wrapper {
+            margin-top: 9rem;
+        }
         h1 {
             font-weight: 900;
             color: #d6c48a;
@@ -70,32 +71,27 @@
             border-radius: 14px;
             padding: 1rem 2rem;
         }
-
         .calc-logo {
             width: 70px;
             height: auto;
         }
-
         .header-text {
             display: flex;
             flex-direction: column;
             justify-content: center;
             text-align: center;
         }
-
         .header-text h1 {
             font-size: 1.8rem;
             margin: 0;
             color: #FFFFFF;
             line-height: 1.2;
         }
-
         .header-text label {
             color: #FFFFFF;
             font-size: 0.85rem;
             margin-top: 4px;
         }
-
         .calc-wrapper {
             display: flex;
             gap: 1.5rem;
@@ -104,7 +100,6 @@
             width: 100%;
             max-width: 900px;
         }
-
         .calculator {
             flex: 1 1 360px;
             max-width: 420px;
@@ -117,19 +112,16 @@
             text-align: center;
             transition: all 0.3s ease;
         }
-
         .calculator:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
         }
-
         .calculator h3 {
             color: #d6c48a;
             font-weight: 900;
             font-size: 1.8em;
             margin-bottom: 1rem;
         }
-
         .button-case {
             display: flex;
             justify-content: center;
@@ -137,7 +129,6 @@
             flex-wrap: wrap;
             margin-bottom: 1rem;
         }
-
         .button-case label {
             background: rgba(255, 255, 255, 0.06);
             padding: 6px 12px;
@@ -147,7 +138,6 @@
             transition: 0.2s;
             color: #f5f0e6;
         }
-
         .button-case label:hover {
             border-color: #d6c48a;
             background: rgba(214, 196, 138, 0.15);
@@ -201,11 +191,9 @@
             opacity: 0.7;
             transition: 0.2s;
         }
-
         .logo-icon:hover {
             opacity: 1;
         }
-
         .sizes-choices {
             position: fixed;
             right: 4rem;
@@ -221,17 +209,14 @@
             transition: opacity 0.3s ease;
             color: #f5f0e6;
         }
-
         .sizes-choices.active {
             opacity: 1;
             pointer-events: auto;
         }
-
         .sizes-choices h6 {
             color: #d6c48a;
             margin-bottom: 1rem;
         }
-
         .sizes-choices button {
             background: #d6c48a;
             color: #000;
@@ -243,7 +228,6 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .sizes-choices button:hover {
             background: #f1e3b0;
         }
@@ -259,7 +243,6 @@
             align-items: center;
             z-index: 1000;
         }
-
         .modal-content {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
@@ -273,7 +256,6 @@
             color: #f5f0e6;
             position: relative;
         }
-
         .modal-content h4 {
             color: #d6c48a;
             font-weight: 900;
@@ -283,25 +265,21 @@
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
-
         .modal-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
             margin-bottom: 1rem;
         }
-
         .modal-table th, .modal-table td {
             padding: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .modal-table th {
             color: #d6c48a;
             font-weight: 500;
             background: rgba(214, 196, 138, 0.1);
         }
-
         .modal-close {
             position: absolute;
             top: 10px;
@@ -312,44 +290,37 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .modal-close:hover {
             color: #f5f0e6;
             transform: scale(1.1);
         }
-
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 text-align: center;
             }
-
             .header-text {
                 align-items: center;
             }
-
             .calc-wrapper {
                 flex-direction: column;
                 align-items: center;
             }
-
             .logo-icon {
                 right: 1rem;
                 bottom: 1rem;
             }
-
             .sizes-choices {
                 right: 0;
                 bottom: 5rem;
                 width: 85%;
             }
-
             .modal-content {
                 margin: 20px;
             }
-        body {
-            padding: 3rem 10px;
-        }
+            .wrapper {
+                margin-top: 2rem;
+            }
         }
         .d-hidden { display: none; }
     </style>
