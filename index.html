@@ -1,186 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PA Disclaimer Calculators</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1e1e1e;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    
-    .wrapper {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .calculator {
-      background: white;
-      padding: 24px 32px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      width: 320px;
-      text-align: center;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disclaimer CalculatoRoar</title>
+    <style>
+        /* BASE STYLES & FONTS (kept from original) */
+        @font-face {
+            font-family: 'GT America';
+            src: url('fonts/GT-America-Standard-Regular.otf') format('opentype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'GT America';
+            src: url('fonts/GT-America-Standard-Medium.otf') format('opentype');
+            font-weight: 500;
+        }
+        @font-face {
+            font-family: 'GT America';
+            src: url('fonts/GT-America-Standard-Regular-Italic.otf') format('opentype');
+            font-weight: 400;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'GT America';
+            src: url('fonts/GT-America-Extended-Black.otf') format('opentype');
+            font-weight: 900;
+        }
 
-    input {
-      width: 100%;
-      padding: 8px;
-      margin: 8px 0 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-    }
+        body {
+            font-family: 'GT America', sans-serif;
+            background: radial-gradient(circle at top, #1b1b1b 0%, #0f0f0f 100%);
+            color: #f5f0e6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 10px;
+        }
 
-    .small-note {
-      font-size: 0.85em;
-      color: #777;
-      margin-bottom: 16px;
-    }
-    .result {
-      margin-top: 12px;
-      font-weight: bold;
-      font-size: 1.2em;
-      transition: color 0.2s ease;
-    }
-    .indicator {
-      margin-top: 6px;
-      font-size: 0.95em;
-      font-weight: 500;
-    }
-    .note {
-      margin-top: 20px;
-      font-size: 0.9em;
-      color: #666;
-    }
-  
-@media (max-width: 600px) {
-  body {
-    height: auto;
-    padding: 20px;
-    align-items: flex-start;
-  }
+        h1 {
+            font-weight: 900;
+            color: #d6c48a;
+            letter-spacing: 1px;
+            margin: 0;
+        }
 
-  .wrapper {
-    flex-direction: column;
-    gap: 16px;
-  }
+        label {
+            color: #d6c48a;
+            font-weight: 500;
+        }
 
-  .calculator {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-}
+        .header-title {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
 
-</style>
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(214, 196, 138, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: 1rem 2rem;
+        }
+
+        .calc-logo {
+            width: 70px;
+            height: auto;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .header-text h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+
+        .header-text label {
+            color: #FFFFFF;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .calc-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .calculator {
+            flex: 1 1 360px;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(214, 196, 138, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            padding: 1.4rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .calculator h3 {
+            color: #d6c48a;
+            font-weight: 900;
+            font-size: 1.8em;
+            margin-bottom: 1rem;
+        }
+
+        .button-case {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .button-case label {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+            color: #f5f0e6;
+        }
+
+        .button-case label:hover {
+            border-color: #d6c48a;
+            background: rgba(214, 196, 138, 0.15);
+        }
+
+        input[type="radio"]:checked + label {
+            border-color: #d6c48a;
+            background: rgba(214, 196, 138, 0.15);
+        }
+
+        input[type="radio"] {
+            accent-color: #d6c48a;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid #555;
+            border-radius: 8px;
+            color: #f5f0e6;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .note {
+            font-size: 0.8em;
+            color: #aaa;
+            margin: 5px 0;
+            text-align: center;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .indicator {
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* === INFO ICON === */
+        .logo-icon {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            width: 50px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: 0.2s;
+        }
+
+        .logo-icon:hover {
+            opacity: 1;
+        }
+
+        .sizes-choices {
+            position: fixed;
+            right: 4rem;
+            bottom: 6rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(214, 196, 138, 0.2);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            text-align: center;
+            padding: 1rem 2rem 3rem 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            color: #f5f0e6;
+        }
+
+        .sizes-choices.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sizes-choices h6 {
+            color: #d6c48a;
+            margin-bottom: 1rem;
+        }
+
+        .sizes-choices button {
+            background: #d6c48a;
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            margin: 6px auto;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sizes-choices button:hover {
+            background: #f1e3b0;
+        }
+
+        /* === MODAL STYLES (New) === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px); /* For Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            color: #f5f0e6;
+            position: relative;
+        }
+
+        .modal-content h4 {
+            color: #d6c48a;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 2px solid rgba(214, 196, 138, 0.5);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-bottom: 1rem;
+        }
+
+        .modal-table th, .modal-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-table th {
+            color: #d6c48a;
+            font-weight: 500;
+            background: rgba(214, 196, 138, 0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #d6c48a;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #f5f0e6;
+            transform: scale(1.1);
+        }
+
+        /* === RESPONSIVE === (kept from original) */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-text {
+                align-items: center;
+            }
+
+            .calc-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo-icon {
+                right: 1rem;
+                bottom: 1rem;
+            }
+
+            .sizes-choices {
+                right: 0;
+                bottom: 5rem;
+                width: 85%;
+            }
+
+            .modal-content {
+                margin: 20px;
+            }
+        }
+
+        .d-hidden { display: none; }
+    </style>
+</head>
+
 <body>
+    <div class="wrapper">
+        <div class="header-title">
+            <div class="header-content">
+                <img src="calcu-logo.png" class="calc-logo" alt="logo">
+                <div class="header-text">
+                    <h1>DISCLAIMER CALCULATEROAR</h1>
+                    <label>UNIT OF MEASUREMENT: PIXEL</label>
+                </div>
+            </div>
+        </div>
 
-  
-  <div class="wrapper">
+        <div class="calc-wrapper">
+            <div class="calculator">
+                <h3>DESIGNER</h3>
+                <div class="button-case">
+                    <label><input type="radio" name="rateOption" value="PA" checked> PA (1.8 - 2.1%)</label>
+                    <label><input type="radio" name="rateOption" value="NY"> NY (5%)</label>
+                    <label><input type="radio" name="rateOption" value="Custom"> Custom</label>
+                </div>
 
-    <div class="calculator">
-      <h3 style= "color: #c0a971; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 2.1em;"> Designer's Calculator </h3>
-      <h2>Required Disclaimer Height</h2>
-      <label>Desired Percentage (1.8% - 2%):</label>
-      <br/><br/>
-      <label>Artboard Size:</label>
-      <input type="number" id="artboardHeight2" placeholder="Enter artboard size (e.g. 1200)" oninput="calculateHeightRange()">
-      <div class="small-note">Note: Largest measurement of the artboard.</div>
-      
-      <div class="result" id="result2"></div>
-      <div class="indicator" id="indicator2"></div>
+                <div id="custom-height-container" class="d-hidden">
+                    <label>PERCENTAGE:</label>
+                    <input type="number" id="percentage" oninput="calculateHeightRange()">
+                </div>
 
-      <div class="note">
-        Note: Use this to find out what the disclaimer height should be.
-      </div>
+                <label>ARTBOARD SIZE:</label>
+                <input type="number" id="artboardHeight2" oninput="calculateHeightRange()">
+                <div class="note">ENTER THE LARGEST MEASUREMENT HERE</div>
+                <div class="result" id="result2"></div>
+                <div id="designer-custom-note" class="d-hidden">
+                    <div class="note">PA - MEASURE LETTER "G" HEIGHT ONLY</div>
+                    <div class="note">NY - MEASURE ENTIRE DISCLAIMER HEIGHT</div>
+                </div>
+            </div>
+
+            <div class="calculator">
+                <h3>CHECKER</h3>
+                <div class="button-case">
+                    <label><input type="radio" name="checkerrateOption" value="PA" checked> PA (1.8 - 2.1%)</label>
+                    <label><input type="radio" name="checkerrateOption" value="NY"> NY (5%)</label>
+                    <label><input type="radio" name="checkerrateOption" value="Custom"> Custom</label>
+                </div>
+
+                <div id="checker-custom-height-container" class="d-hidden">
+                    <label>PERCENTAGE:</label>
+                    <input type="number" id="checkerpercentage" oninput="calculatePercentage()">
+                </div>
+
+                <div id="disclaimer-container">
+                    <label>DISCLAIMER HEIGHT:</label>
+                    <input type="number" id="disclaimerHeight" oninput="calculatePercentage()">
+                    <div class="note">PA - MEASURE LETTER "G" HEIGHT ONLY</div>
+                    <div class="note">NY - MEASURE ENTIRE DISCLAIMER HEIGHT</div>
+                </div>
+
+                <label>ARTBOARD SIZE:</label>
+                <input type="number" id="artboardHeight" oninput="calculatePercentage()">
+                <div class="note">ENTER THE LARGEST ARTBOARD MEASUREMENT HERE</div>
+
+                <div class="result" id="result"></div>
+                <div class="indicator" id="indicator"></div>
+                <div id="custom-note" class="d-hidden">
+                    <div class="note">PA - MEASURE LETTER "G" HEIGHT ONLY</div>
+                    <div class="note">NY - MEASURE ENTIRE DISCLAIMER HEIGHT</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="note" style="margin-top: 1.5rem;">
+            NOTE: THIS TOOL IS USED TO CALCULATE THE REQUIRED DISCLAIMER PERCENTAGE COMPLIANCE BASED ON STATE REGULATIONS.
+        </div>
     </div>
 
-    <div class="calculator">
-      <h3 style= "color: #c0a971; font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; font-size: 2.1em;"> Checker's Calculator</h3>
-        
-      <h2>PA Disclaimer Calculator</h2>
-      <label>Height of Disclaimer:</label>
-      <input type="number" id="disclaimerHeight" placeholder="Enter height (e.g. 25)" oninput="calculatePercentage()">
-      
-      <label>Artboard Size:</label>
-      <input type="number" id="artboardHeight" placeholder="Enter artboard size (e.g. 1200)" oninput="calculatePercentage()">
-      <div class="small-note">Note: Largest measurement of the artboard.</div>
-      
-      <div class="result" id="result"></div>
-      <div class="indicator" id="indicator"></div>
+    <img src="info-logo.png" class="logo-icon" alt="info">
 
-      <div class="note">
-        Note: PA disclaimer size should be between <strong>1.8%</strong> and <strong>2.1%</strong> of the artboard size.
-      </div>
+    <div class="sizes-choices">
+        <h6>ADV COMMON SIZES FOR<br>DISCLAIMERS</h6>
+        <div><button id="pa-ref-btn">PA SIZES REFERENCE</button></div>
+        <div><button id="ny-ref-btn">NY SIZES REFERENCE</button></div>
     </div>
 
+    <div id="pa-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('pa-modal')">&times;</span>
+            <h4>Pennsylvania (PA) Disclaimer Cheat Sheet</h4>
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>Artboard Size (px)</th>
+                        <th>Min 'g' Height (1.8%)</th>
+                        <th>Max 'g' Height (2.1%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1080</td><td>19.44</td><td>22.68</td></tr>
+                    <tr><td>720</td><td>12.96</td><td>15.12</td></tr>
+                    <tr><td>600</td><td>10.80</td><td>12.60</td></tr>
+                    <tr><td>300</td><td>5.40</td><td>6.30</td></tr>
+                </tbody>
+            </table>
+            <p class="note" style="color: #d6c48a;">*Measurements are for the height of the letter "g" only.</p>
+        </div>
+    </div>
+
+    <div id="ny-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('ny-modal')">&times;</span>
+            <h4>New York (NY) Disclaimer Cheat Sheet</h4>
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>Artboard Size (px)</th>
+                        <th>Required Disclaimer Height (5%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1080</td><td>54.00</td></tr>
+                    <tr><td>720</td><td>36.00</td></tr>
+                    <tr><td>600</td><td>30.00</td></tr>
+                    <tr><td>300</td><td>15.00</td></tr>
+                </tbody>
+            </table>
+            <p class="note" style="color: #d6c48a;">*Measurements are for the entire disclaimer text block height.</p>
+        </div>
+    </div>
+
+    <script>
+        // === ORIGINAL JS (with minor radio button fix) ===
+
+        // Info Icon Toggle
+        const logoIcon = document.querySelector('.logo-icon');
+        const sizesChoices = document.querySelector('.sizes-choices');
+        logoIcon.addEventListener('click', () => sizesChoices.classList.toggle('active'));
+
+        // DESIGNER CALCULATOR LOGIC
+        const customContainer = document.getElementById('custom-height-container');
+        const designercustomnote = document.getElementById('designer-custom-note');
+        document.querySelectorAll('input[name="rateOption"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                designercustomnote.classList.add("d-hidden");
+                const selectedValue = document.querySelector('input[name="rateOption"]:checked').value;
+                customContainer.classList.toggle("d-hidden", selectedValue !== "Custom");
+                calculateHeightRange();
+            });
+        });
+
+        function calculateHeightRange() {
+            const customheight = parseFloat(document.getElementById('percentage').value);
+            const artboard = parseFloat(document.getElementById('artboardHeight2').value);
+            const resultDiv = document.getElementById('result2');
+            const selectedRate = document.querySelector('input[name="rateOption"]:checked').value;
+            const designercustomnote = document.getElementById('designer-custom-note');
+
+            if (isNaN(artboard) || artboard === 0) {
+                designercustomnote.classList.add("d-hidden");
+                resultDiv.textContent = "";
+                return;
+            }
+
+            designercustomnote.classList.remove("d-hidden");
+
+            if (selectedRate === "PA") {
+                const minHeight = (1.8 / 100) * artboard;
+                const maxHeight = (2.1 / 100) * artboard;
+                resultDiv.style.color = "green";
+                resultDiv.innerHTML = `Required disclaimer height:<br>${minHeight.toFixed(2)}px – ${maxHeight.toFixed(2)}px`;
+            } else if (selectedRate === "NY") {
+                const requiredHeight = (5 / 100) * artboard;
+                resultDiv.style.color = "green";
+                resultDiv.innerHTML = `Required disclaimer height:<br>${requiredHeight.toFixed(2)}px`;
+            } else if (selectedRate === "Custom") {
+                if (isNaN(customheight) || customheight === 0) {
+                    resultDiv.textContent = "";
+                    designercustomnote.classList.add("d-hidden");
+                    return;
+                }
+                const requiredHeight = (customheight / 100) * artboard;
+                resultDiv.style.color = "green";
+                resultDiv.innerHTML = `Required disclaimer height:<br>${requiredHeight.toFixed(2)}px`;
+            }
+        }
+
+        // CHECKER CALCULATOR LOGIC
+        const checkercustomContainer = document.getElementById('checker-custom-height-container');
+        const checkerdisclaimerContainer = document.getElementById('disclaimer-container');
+        const customnote = document.getElementById('custom-note');
+        document.querySelectorAll('input[name="checkerrateOption"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                customnote.classList.add("d-hidden");
+                const checkerselectedValue = document.querySelector('input[name="checkerrateOption"]:checked').value;
+                checkercustomContainer.classList.toggle("d-hidden", checkerselectedValue !== "Custom");
+                checkerdisclaimerContainer.classList.toggle("d-hidden", checkerselectedValue === "Custom");
+                calculatePercentage();
+            });
+        });
+
+        function calculatePercentage() {
+            const disclaimer = parseFloat(document.getElementById('disclaimerHeight').value);
+            const checkerpercentage = parseFloat(document.getElementById('checkerpercentage').value);
+            const artboard = parseFloat(document.getElementById('artboardHeight').value);
+            const resultDiv = document.getElementById('result');
+            const indicatorDiv = document.getElementById('indicator');
+            const checkerselectedRate = document.querySelector('input[name="checkerrateOption"]:checked').value;
+
+            resultDiv.textContent = "";
+            indicatorDiv.textContent = "";
+            customnote.classList.add("d-hidden");
+            
+            if (isNaN(artboard) || artboard === 0) return;
+
+            if (checkerselectedRate === "PA") {
+                if (isNaN(disclaimer) || disclaimer === 0) return;
+
+                const percentage = (disclaimer / artboard) * 100;
+                const rounded = percentage.toFixed(2);
+                resultDiv.textContent = `Disclaimer is ${rounded}% of the artboard height.`;
+
+                if (percentage >= 1.8 && percentage <= 2.1) {
+                    resultDiv.style.color = "green";
+                    indicatorDiv.textContent = "✅ Within range (1.8% - 2.1%)";
+                    indicatorDiv.style.color = "green";
+                } else {
+                    resultDiv.style.color = "red";
+                    indicatorDiv.textContent = percentage < 1.8 ? "⚠️ Too small (< 1.8%)" : "⚠️ Too large (> 2.1%)";
+                    indicatorDiv.style.color = "red";
+                }
+            } else if (checkerselectedRate === "NY") {
+                if (isNaN(disclaimer) || disclaimer === 0) return;
+
+                const percentage = (disclaimer / artboard) * 100;
+                const rounded = percentage.toFixed(2);
+                resultDiv.textContent = `Disclaimer is ${rounded}% of the artboard height.`;
+                
+                if (percentage >= 4.9 && percentage <= 5.1) { // Allowing a tiny margin for user input/rounding
+                    resultDiv.style.color = "green";
+                    indicatorDiv.textContent = "✅ Correct size (5%)";
+                    indicatorDiv.style.color = "green";
+                } else {
+                    resultDiv.style.color = "red";
+                    indicatorDiv.textContent = percentage < 5 ? "⚠️ Too small (< 5%)" : "⚠️ Too large (> 5%)";
+                    indicatorDiv.style.color = "red";
+                }
+            } else if (checkerselectedRate === "Custom") {
+                if (isNaN(checkerpercentage) || checkerpercentage === 0) return;
+
+                const disclaimerHeight = (checkerpercentage / 100) * artboard;
+                const rounded = disclaimerHeight.toFixed(2);
+                resultDiv.textContent = `Required Disclaimer height is ${rounded}px.`;
+                resultDiv.style.color = "green";
+                indicatorDiv.textContent = "";
+                customnote.classList.remove("d-hidden");
+            }
+        }
 
 
-  </div>
+        // === NEW MODAL JS ===
 
-  <script>
-    // Checker Calculator: Percentage of disclaimer height
-    function calculatePercentage() {
-      const disclaimer = parseFloat(document.getElementById('disclaimerHeight').value);
-      const artboard = parseFloat(document.getElementById('artboardHeight').value);
-      const resultDiv = document.getElementById('result');
-      const indicatorDiv = document.getElementById('indicator');
+        const paModal = document.getElementById('pa-modal');
+        const nyModal = document.getElementById('ny-modal');
+        const paRefBtn = document.getElementById('pa-ref-btn');
+        const nyRefBtn = document.getElementById('ny-ref-btn');
 
-      if (isNaN(disclaimer) || isNaN(artboard) || artboard === 0) {
-        resultDiv.textContent = "";
-        indicatorDiv.textContent = "";
-        return;
-      }
+        paRefBtn.addEventListener('click', () => openModal('pa-modal'));
+        nyRefBtn.addEventListener('click', () => openModal('ny-modal'));
 
-      const percentage = (disclaimer / artboard) * 100;
-      const rounded = percentage.toFixed(2);
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            sizesChoices.classList.remove('active'); // Close the sizes-choices menu
+        }
 
-      resultDiv.textContent = `Disclaimer is ${rounded}% of the artboard height.`;
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
 
-      if (percentage >= 1.8 && percentage <= 2.1) {
-        resultDiv.style.color = "green";
-        indicatorDiv.textContent = "✅ Within range";
-        indicatorDiv.style.color = "green";
-      } else if (percentage < 1.8) {
-        resultDiv.style.color = "red";
-        indicatorDiv.textContent = "⚠️ Too small";
-        indicatorDiv.style.color = "red";
-      } else {
-        resultDiv.style.color = "red";
-        indicatorDiv.textContent = "⚠️ Too large";
-        indicatorDiv.style.color = "red";
-      }
-    }
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === paModal) {
+                closeModal('pa-modal');
+            }
+            if (event.target === nyModal) {
+                closeModal('ny-modal');
+            }
+        }
 
-    // Designer Calculator: Show 1.8–2% range
-    function calculateHeightRange() {
-      const artboard = parseFloat(document.getElementById('artboardHeight2').value);
-      const resultDiv = document.getElementById('result2');
-      const indicatorDiv = document.getElementById('indicator2');
-
-      if (isNaN(artboard) || artboard === 0) {
-        resultDiv.textContent = "";
-        indicatorDiv.textContent = "";
-        return;
-      }
-
-      const minHeight = (1.8 / 100) * artboard;
-      const maxHeight = (2 / 100) * artboard;
-
-      resultDiv.textContent = `Required disclaimer height: ${minHeight.toFixed(2)}px – ${maxHeight.toFixed(2)}px`;
-
-      resultDiv.style.color = "green";
-      indicatorDiv.textContent = "✅ Within recommended range";
-      indicatorDiv.style.color = "green";
-    }
-  </script>
+        // Initialize calculations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            calculateHeightRange();
+            calculatePercentage();
+        });
+    </script>
 </body>
 </html>
