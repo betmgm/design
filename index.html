@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Disclaimer CalculatoRoar</title>
     <style>
-        /* BASE STYLES & FONTS (kept from original) */
         @font-face {
             font-family: 'GT America';
             src: url('fonts/GT-America-Standard-Regular.otf') format('opentype');
@@ -586,7 +585,7 @@
 
         function openModal(modalId) {
             document.getElementById(modalId).style.display = 'flex';
-            sizesChoices.classList.remove('active'); // Close the sizes-choices menu
+            sizesChoices.classList.remove('active');
         }
 
         function closeModal(modalId) {
@@ -602,7 +601,6 @@
             }
         }
 
-        // Initialize calculations on load
         document.addEventListener('DOMContentLoaded', () => {
             calculateHeightRange();
             calculatePercentage();
